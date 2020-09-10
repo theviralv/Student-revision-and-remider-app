@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+<body style='text-align: center;'>
+    <h1 style="text-align:center;"><u>{{ date }}</u></h1>
+    <a href='{% url 'create' %}'>Create</a> / 
+    <hr><hr>
+    {% for it in qset %}
+        <form method='POST'>
+            {% csrf_token %}
+            <b>{{ it.title }}&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='qwerty' value='{{ it.id }}' onclick='submit()'/></b>
+            <p>{{ it.desc }}</p>
+            {% if it.file %}
+                <p><a href="media/{{ it.file }}">Attached File</a></p>
+            {% else %}
+                <p style='color:blue;'>No attached file.</p>
+            {% endif %}    
+            <hr>
+        </form>
+    {% endfor %}
+    {% for it in qset2 %}
+        <form method='POST'>
+            {% csrf_token %}
+            <p><strike>{{ it.title }}</strike>&nbsp;&nbsp;&nbsp;&nbsp;<button type='submit' name='qwerty' value='{{ it.id }}'>Again</button></p>
+            <p><strike>{{ it.desc }}</strike></p>
+            {% if it.file %}
+                <p><strike><a href="media/{{ it.file }}">Attached File</a></strike></p>
+            {% else %}
+                <p style='color:blue;'><strike>No attached file.</strike></p>
+            {% endif %}    
+            <hr>
+        </form>
+    {% endfor %}
+</body>
+</html>
