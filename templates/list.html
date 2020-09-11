@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %} List {% endblock %}
 
+{% block onlylist %}
+    <p>Hello {{ request.user }}!!</p>
+{% endblock %}
+
 {% block content %}
     {% for it in qset %}
         <form method='POST'>
@@ -30,4 +34,9 @@
             <hr>
         </form>
     {% endfor %}
+{% endblock %}
+
+{% block onlylist2 %}
+    <br><br><br><br>    
+    <div style="text-align:left;"><p>Total Number of users registered on the server = <b>{{ cnt }}</b></p></div>
 {% endblock %}

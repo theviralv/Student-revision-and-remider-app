@@ -6,6 +6,7 @@ Log In
 
 {% block content %}
 <h1>Log In form</h1>
+<p style='color: green;'>You have to login / signup before accessing the app.</p>
 <div style='color:red;'>
     {% if form.errors %}
         {% for field in form %}
@@ -25,5 +26,5 @@ Log In
     {% endfor %}
     <button type='submit'>Log In</button>
 </form>
-<p><a href='{% url 'password_reset' %}'>Forgot your password?</a></p>
+<p><a href='{% url 'signup' %}'>Not a user, Sign Up.</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='{% url 'password_reset' %}'>Forgot your password?</a></p>
 {% endblock %}

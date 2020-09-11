@@ -7,8 +7,11 @@
 </head>
 <body style='text-align: center;'>
     <h1><u>{{ date }}</u></h1>
+    {% block onlylist %}
+
+    {% endblock %}
     <hr>
-    <a href='{% url 'list' %}'>Home</a> / 
+    / <a href='{% url 'list' %}'>Home</a> / 
     {% if not request.user.is_authenticated %}
         <a href="{% url 'signup' %}">Sign Up</a> / 
         <a href="{% url 'login' %}">Log In</a> / 
@@ -16,11 +19,14 @@
         <a href='{% url 'create' %}'>New revision</a> / 
         <a href='{% url 'todo' %}'>New Todo</a> / 
         <a href='{% url 'reminder' %}'>New Reminder</a> /
-        <a href="{% url 'logout' %}">Log Out</a> / 
         <a href="{% url 'password_change' %}">Change Password</a> / 
+        <a href="{% url 'logout' %}" style='color: red;'>Log Out</a> / 
     {% endif %}
     <hr><br><br><br>
     {% block content %}
+
+    {% endblock %}
+    {% block onlylist2 %}
 
     {% endblock %}
 </body>
