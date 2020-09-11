@@ -24,6 +24,19 @@ def create_view(request):
             form = RawTaskForm()
     return render(request, "create.html", {"form":form, "crr_date":crr_date, "date":date})
 
+def todo_view(request):
+    crr_date = datetime.date.today()
+    form = RawTaskForm()
+    date = crr_date.strftime('%d %b %y')
+    if request.method == 'POST':
+        form = RawTaskForm(request.POST, request.FILES)
+        if form.is_valid():
+            Task.objects.create(**form.cleaned_data, status=False, date=crr_date)
+            return redirect("list")
+        else:
+            form = RawTaskForm()
+    return render(request, "todo.html", {"form":form, "crr_date":crr_date, "date":date})
+
 def list_view(request):
     crr_date = datetime.date.today()
     date = crr_date.strftime('%d %b %y')

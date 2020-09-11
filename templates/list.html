@@ -7,7 +7,8 @@
 </head>
 <body style='text-align: center;'>
     <h1 style="text-align:center;"><u>{{ date }}</u></h1>
-    <a href='{% url 'create' %}'>Create</a> / 
+    <a href='{% url 'create' %}'>New revision</a> / 
+    <a href='{% url 'todo' %}'>New Todo</a> / 
     <hr><hr>
     {% for it in qset %}
         <form method='POST'>
