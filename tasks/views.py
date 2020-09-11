@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect
 from .models import Task
 from .forms import RawTaskForm, RawReminderForm
 import datetime
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create_view(request):
     crr_date = datetime.date.today()
     form = RawTaskForm()
@@ -24,6 +26,7 @@ def create_view(request):
             form = RawTaskForm()
     return render(request, "create.html", {"form":form, "crr_date":crr_date, "date":date})
 
+@login_required
 def todo_view(request):
     crr_date = datetime.date.today()
     form = RawTaskForm()
@@ -38,6 +41,7 @@ def todo_view(request):
             form = RawTaskForm()
     return render(request, "todo.html", {"form":form, "crr_date":crr_date, "date":date})
 
+@login_required
 def reminder_view(request):
     crr_date = datetime.date.today()
     form = RawReminderForm()
@@ -54,18 +58,19 @@ def reminder_view(request):
 def list_view(request):
     crr_date = datetime.date.today()
     date = crr_date.strftime('%d %b %y')
-    print(crr_date)
     qset = Task.objects.filter(date=crr_date, status=False)
     qset2 = Task.objects.filter(date=crr_date, status=True)
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get("qwerty"):
         obj = Task.objects.get(id=int(request.POST.get("qwerty")))
-        print(obj)
-        print(obj.status)
         if obj.status:
             obj.status = False
         else:
             obj.status = True
         obj.save()
+        return redirect("list")
+    if request.method == 'POST' and request.POST.get("delete"):
+        obj = Task.objects.get(id=int(request.POST.get("delete")))
+        obj.delete()
         return redirect("list")
     return render(request, "list.html", {"crr_date":crr_date, "qset":qset, "qset2":qset2, "date":date})
             

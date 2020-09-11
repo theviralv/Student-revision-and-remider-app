@@ -18,13 +18,15 @@
     {% for it in qset2 %}
         <form method='POST'>
             {% csrf_token %}
-            <p><strike>{{ it.title }}</strike>&nbsp;&nbsp;&nbsp;&nbsp;<button type='submit' name='qwerty' value='{{ it.id }}'>Again</button></p>
+            <p><strike>{{ it.title }}</strike></p>
             <p><strike>{{ it.desc }}</strike></p>
             {% if it.file %}
                 <p><strike><a href="media/{{ it.file }}">Attached File</a></strike></p>
             {% else %}
                 <p style='color:blue;'><strike>No attached file.</strike></p>
             {% endif %}    
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<button type='submit' name='qwerty' value='{{ it.id }}'>Again</button>
+                &nbsp;&nbsp;<button type='submit' name='delete' value='{{ it.id }}'>Delete</button></p>
             <hr>
         </form>
     {% endfor %}
