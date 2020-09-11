@@ -2,11 +2,11 @@
 {% block title %} List {% endblock %}
 
 {% block content %}
-    <form method="POST" enctype='multipart/form-data'>
+    <form method="POST" enctype= 'multipart/form-data'>
         {% csrf_token %}
         {% for field in form %}
-            <p>{{ field }}</p>
+            <p>{{ field }}  {{ field.errors }}</p>
         {% endfor %}
-        <button type='submit'>ADD</button>
+        <button type='submit'>ADD REMINDER</button>
     </form>
 {% endblock %}

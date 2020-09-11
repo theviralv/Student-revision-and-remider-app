@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from .models import Task
-from .forms import RawTaskForm
+from .forms import RawTaskForm, RawReminderForm
 import datetime
 
 def create_view(request):
@@ -31,11 +31,25 @@ def todo_view(request):
     if request.method == 'POST':
         form = RawTaskForm(request.POST, request.FILES)
         if form.is_valid():
+            print(request.FILES)
             Task.objects.create(**form.cleaned_data, status=False, date=crr_date)
             return redirect("list")
         else:
             form = RawTaskForm()
     return render(request, "todo.html", {"form":form, "crr_date":crr_date, "date":date})
+
+def reminder_view(request):
+    crr_date = datetime.date.today()
+    form = RawReminderForm()
+    date = crr_date.strftime('%d %b %y')
+    if request.method == 'POST':
+        form = RawReminderForm(request.POST, request.FILES)
+        if form.is_valid():
+            Task.objects.create(**form.cleaned_data, status=False)
+            return redirect("list")
+        else:
+            form = RawReminderForm()
+    return render(request, "reminder.html", {"form":form, "crr_date":crr_date, "date":date})
 
 def list_view(request):
     crr_date = datetime.date.today()

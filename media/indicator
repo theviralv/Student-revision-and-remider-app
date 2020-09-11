@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# UPDT: May 30 2018 - Cohesion with new multi-timer and old lock-screen-timer.
+
+if [ -f ~/.lock-screen-timer-remaining ]; then
+    text-spinner
+    Spinner=$(cat ~/.last-text-spinner) # read last text spinner used
+    String=$(cat ~/.lock-screen-timer-remaining)
+    systray="$Spinner  $String"
+else
+    systray=""
+fi
+
+if [ -f /tmp/display-current-brightness ]; then
+    Brightness=$(cat /tmp/display-current-brightness)
+    systray="$systray  Brightness: $Brightness"
+else
+    systray="$systray  Brightness: OFF"
+fi
+
+# Below for AU answer: https://askubuntu.com/questions/1024866/is-it-possible-to-show-ip-address-on-top-bar-near-the-time
+# default_interface=$(route -n | awk '$1 == "0.0.0.0" {print $8; exit}')
+# ip_address=$(ifconfig "$default_interface" | awk 'sub(/.* inet addr:/, "") {print $1}')
+# systray="$systray  $ip_address"
+        
+echo "$systray" # sysmon-indidicator will put echo string into systray for us.
+
+exit 0

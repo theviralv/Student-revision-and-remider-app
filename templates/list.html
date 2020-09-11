@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List</title>
-</head>
-<body style='text-align: center;'>
-    <h1 style="text-align:center;"><u>{{ date }}</u></h1>
-    <a href='{% url 'create' %}'>New revision</a> / 
-    <a href='{% url 'todo' %}'>New Todo</a> / 
-    <hr><hr>
+{% extends 'base.html' %}
+{% block title %} List {% endblock %}
+
+{% block content %}
     {% for it in qset %}
         <form method='POST'>
             {% csrf_token %}
@@ -36,5 +28,4 @@
             <hr>
         </form>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

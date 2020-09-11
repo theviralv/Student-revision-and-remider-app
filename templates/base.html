@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body style='text-align: center;'>
+    <h1><u>{{ date }}</u></h1>
+    <a href='{% url 'list' %}'>Home</a> / 
+    <a href='{% url 'create' %}'>New revision</a> / 
+    <a href='{% url 'todo' %}'>New Todo</a> / 
+    <a href='{% url 'reminder' %}'>New Reminder</a> / 
+    <hr><hr>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
