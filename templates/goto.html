@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} List {% endblock %}
+
+{% block onlylist %}
+    <p>Hello {{ request.user }}!!</p>
+{% endblock %}
+
+{% block content %}
+    <b>You are in View only mode. Go to <a href='{% url 'list' %}'>Home</a> to add tasks.</b>
+    <form method='GET' style="text-align: left; border-style: none none none double;">
+        >>
+        <input type='date' name='crr_date' />
+        <input type="submit" value='Go' />
+    </form><br><br>
+    {% for it in qset %}
+        <form method='POST'>
+            {% csrf_token %}
+            <b>{{ it.title }}&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='qwerty' value='{{ it.id }}' onclick='submit()'/></b>
+            <p>{{ it.desc }}</p>
+            {% if it.file %}
+                <p><a href="media/{{ it.file }}">Attached File</a></p>
+            {% else %}
+                <p style='color:blue;'>No attached file.</p>
+            {% endif %}    
+            <hr>
+        </form>
+    {% endfor %}
+    {% for it in qset2 %}
+        <form method='POST'>
+            {% csrf_token %}
+            <p><strike>{{ it.title }}</strike></p>
+            <p><strike>{{ it.desc }}</strike></p>
+            {% if it.file %}
+                <p><strike><a href="media/{{ it.file }}">Attached File</a></strike></p>
+            {% else %}
+                <p style='color:blue;'><strike>No attached file.</strike></p>
+            {% endif %}    
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<button type='submit' name='qwerty' value='{{ it.id }}'>Again</button>
+                &nbsp;&nbsp;<button type='submit' name='delete' value='{{ it.id }}'>Delete</button></p>
+            <hr>
+        </form>
+    {% endfor %}
+{% endblock %}
+
+{% block onlylist2 %}
+    <br><br><br><br>    
+    <div style="text-align:left;"><p>Total Number of users registered on the server = <b>{{ cnt }}</b></p></div>
+{% endblock %}

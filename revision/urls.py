@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from tasks.views import list_view, create_view, todo_view, reminder_view
+from tasks.views import list_view, create_view, todo_view, reminder_view, goto_view
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -28,6 +28,7 @@ urlpatterns = [
     path('todo/', todo_view, name='todo'),
     path('reminder/', reminder_view, name='reminder'),
     path('signup/', signup_view, name='signup'),
+    path('goto/', goto_view, name='goto'),
     path('accounts/', include("django.contrib.auth.urls")),
 ]
 

@@ -58,7 +58,7 @@ def reminder_view(request):
 
 @login_required
 def list_view(request):
-    crr_date = datetime.date.today()
+    crr_date = datetime.date.today();
     date = crr_date.strftime('%d %b %y')
     qset = Task.objects.filter(date=crr_date, status=False, user_name=request.user)
     qset2 = Task.objects.filter(date=crr_date, status=True, user_name=request.user)
@@ -76,5 +76,28 @@ def list_view(request):
         obj.delete()
         return redirect("list")
     return render(request, "list.html", {"crr_date":crr_date, "qset":qset, "qset2":qset2, "date":date, "cnt":cnt})
+
+@login_required
+def goto_view(request):
+    crr_date = datetime.date.today();
+    wq = True
+    if request.GET.get('crr_date'):
+        qw = str(request.GET.get('crr_date'))
+        crr_date = datetime.datetime.strptime(qw, "%Y-%m-%d")
+    date = crr_date.strftime('%d %b %y')
+    qset = Task.objects.filter(date=crr_date, status=False, user_name=request.user)
+    qset2 = Task.objects.filter(date=crr_date, status=True, user_name=request.user)
+    cnt = User.objects.count()
+    if request.method == 'POST' and request.POST.get("qwerty"):
+        obj = Task.objects.get(id=int(request.POST.get("qwerty")))
+        if obj.status:
+            obj.status = False
+        else:
+            obj.status = True
+        obj.save()
+    if request.method == 'POST' and request.POST.get("delete"):
+        obj = Task.objects.get(id=int(request.POST.get("delete")))
+        obj.delete()
+    return render(request, "goto.html", {"crr_date":crr_date, "qset":qset, "qset2":qset2, "date":date, "cnt":cnt, "wq":wq})
             
             
